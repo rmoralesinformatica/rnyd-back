@@ -28,6 +28,10 @@ public class UserDTO {
         this.keyword = keyword;
     }
 
+    public UserDTO() {
+
+    }
+
     public String getEmail() {
         return email;
     }
