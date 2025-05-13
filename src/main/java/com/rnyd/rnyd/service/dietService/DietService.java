@@ -108,7 +108,7 @@ public class DietService implements DietUseCase {
             String fileName = UUID.randomUUID().toString() + "_" + dietPdfFile.getOriginalFilename();
             Path filePath = Paths.get(uploadsDir, fileName);
 
-
+            Files.createDirectories(filePath.getParent());
             Files.copy(dietPdfFile.getInputStream(), filePath);
 
 
@@ -164,6 +164,7 @@ public class DietService implements DietUseCase {
                 String uploadsDir = "public/uploads/";
                 String fileName = UUID.randomUUID().toString() + "_" + dietPdfFile.getOriginalFilename();
                 Path filePath = Paths.get(uploadsDir, fileName);
+                Files.createDirectories(filePath.getParent());
                 Files.copy(dietPdfFile.getInputStream(), filePath);
 
                 String dietUrl = "/uploads/" + fileName;
@@ -182,6 +183,7 @@ public class DietService implements DietUseCase {
 
     @Transactional
     public String assignDiet(String email, DietDTO dietDTO) {
+        System.out.println("🔎 Diet ID recibido: " + dietDTO.getDietId());
         Optional<DietEntity> dietOpt = dietRepository.findById(dietDTO.getDietId());
         Optional<UserEntity> userOpt = userRepository.findByEmail(email);
 
@@ -199,7 +201,7 @@ public class DietService implements DietUseCase {
         if (!user.getDiets().contains(diet)) {
             user.getDiets().add(diet);
         }
-
+        dietRepository.save(diet);
         userRepository.save(user);
 
         return DIET_ASSIGNED;

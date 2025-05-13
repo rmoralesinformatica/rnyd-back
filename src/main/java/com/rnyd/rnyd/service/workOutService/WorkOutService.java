@@ -37,8 +37,6 @@ import static com.rnyd.rnyd.utils.constants.Variables.*;
 
 @Service
 public class WorkOutService implements WorkOutUseCase {
-    // TODO: En BBDD hay que cambiar que la tabla nutrition sea independiente
-
 
     private final WorkOutRepository workOutRepository;
     private final WorkOutMapper workOutMapper;
@@ -51,7 +49,6 @@ public class WorkOutService implements WorkOutUseCase {
         this.userRepository = userRepository;
     }
 
-
     public String createWorkout(WorkOutPDFDTO workoutDTO, MultipartFile dietPdfFile) {
         try {
             String uploadsDir = "public/uploads/";
@@ -59,19 +56,15 @@ public class WorkOutService implements WorkOutUseCase {
             String fileName = UUID.randomUUID().toString() + "_" + dietPdfFile.getOriginalFilename();
             Path filePath = Paths.get(uploadsDir, fileName);
 
-
             Files.copy(dietPdfFile.getInputStream(), filePath);
 
-
             String dietUrl = "/uploads/" + fileName;
-
 
             WorkoutEntity workoutEntity = new WorkoutEntity();
             workoutEntity.setWorkoutName(workoutDTO.getWorkoutName());
             workoutEntity.setNote(workoutDTO.getNote());
             workoutEntity.setStartDate(workoutDTO.getStartDate());
             workoutEntity.setCreatedAt(workoutDTO.getCreatedAt());
-
             workoutEntity.setWorkoutUrl(dietUrl);
 
             workOutRepository.save(workoutEntity);
@@ -119,18 +112,10 @@ public class WorkOutService implements WorkOutUseCase {
         return "Workout updated successfully";
     }
 
-
-
-    // @Transactional
-    // public WorkOutPDFDTO getPdfByEmail(String email) {
-    // Optional<UserEntity> userEntityOptional = userRepository.findByEmail(email);
-    // assert userEntityOptional.orElse(null) != null;
-
-    // return workOutMapper.toPdfDto(userEntityOptional.orElse(null).getWorkout());
-    // }
-
     @Transactional
     public String assignWorkout(String email, WorkOutDTO workoutDTO) {
+        System.out.println("🔎 Workout ID recibido: " + workoutDTO.getWorkoutId());
+
         Optional<WorkoutEntity> workoutOpt = workOutRepository.findById(workoutDTO.getWorkoutId());
         Optional<UserEntity> userOpt = userRepository.findByEmail(email);
 
@@ -141,19 +126,16 @@ public class WorkOutService implements WorkOutUseCase {
         WorkoutEntity workout = workoutOpt.get();
         UserEntity user = userOpt.get();
 
-        // Set the workout's user
         workout.setUser(user);
 
-        // Add the workout to the user's workouts list if not already there
         if (!user.getWorkouts().contains(workout)) {
             user.getWorkouts().add(workout);
         }
 
-        userRepository.save(user); // Saves both due to CascadeType.ALL
+        workOutRepository.save(workout);
 
         return "Workout assigned successfully";
     }
-
 
     @Transactional
     public String deleteWorkoutById(Long id) {
@@ -163,23 +145,18 @@ public class WorkOutService implements WorkOutUseCase {
 
         WorkoutEntity workout = workoutOpt.get();
 
-        // Delete PDF file
         if (workout.getWorkoutUrl() != null) {
             Path pdfPath = Paths.get("public", workout.getWorkoutUrl().replace("/uploads/", ""));
             try {
                 Files.deleteIfExists(pdfPath);
             } catch (IOException e) {
-                e.printStackTrace(); // Optional: Log error
+                e.printStackTrace();
             }
         }
 
-        // Delete workout entity
         workOutRepository.delete(workout);
         return "Workout deleted successfully";
     }
-
-
-
 
     public List<WorkOutDTO> getAllWorkoutsWithUsers() {
         return workOutRepository.findAll().stream()
