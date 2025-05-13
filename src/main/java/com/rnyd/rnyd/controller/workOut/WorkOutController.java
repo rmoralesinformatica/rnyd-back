@@ -55,8 +55,6 @@ public class WorkOutController {
         return new ResponseEntity<>(WORKOUT_ALREADY_EXISTS, HttpStatus.BAD_REQUEST);
     }
 
-
-
     @PatchMapping(value = "/update/{workoutId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> updateWorkoutById(
             @PathVariable Long workoutId,
@@ -71,9 +69,6 @@ public class WorkOutController {
 
         return ResponseEntity.ok(result);
     }
-
-
-
 
     @PostMapping("/assign/{email}")
     public ResponseEntity<String> assignWorkout(@PathVariable String email, @RequestBody WorkOutDTO workoutDTO){
@@ -94,21 +89,6 @@ public class WorkOutController {
         }
         return ResponseEntity.ok(result);
     }
-
-
-    // @Transactional(readOnly = true)
-    // @GetMapping("/{email}")
-    // public ResponseEntity<WorkOutDTO> getWorkoutByEmail(@PathVariable String email){
-    //     WorkOutDTO workoutResponse = workOutService.getWorkOutByEmail(email);
-
-    //     if(workoutResponse != null){
-    //         return new ResponseEntity<>(workoutResponse, HttpStatus.OK);
-    //     }
-
-    //     return new ResponseEntity<>(workoutResponse, HttpStatus.OK);
-    // }
-
-
 
     @Transactional(readOnly = true)
     @GetMapping
