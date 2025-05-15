@@ -22,6 +22,8 @@ import com.stripe.param.ProductCreateParams;
 
 import static com.rnyd.rnyd.utils.constants.Variables.CURRENCY;
 import com.stripe.param.PaymentLinkCreateParams.LineItem;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -38,6 +40,8 @@ import com.stripe.param.checkout.SessionCreateParams;
 
 @Service
 public class StripeService implements StripeUseCase {
+    @Value("${stripe.secret-key}")
+    private String stripeSecretKey;
 
     public StripeService(SubscriptionRepository subscriptionRepository, SubscriptionMapper subscriptionMapper,   UserRepository userRepository) {
         this.subscriptionRepository = subscriptionRepository;
@@ -48,13 +52,17 @@ public class StripeService implements StripeUseCase {
     private SubscriptionRepository subscriptionRepository;
     private SubscriptionMapper subscriptionMapper;
     private final UserRepository userRepository;
+    @PostConstruct
+    public void init() {
+        Stripe.apiKey = stripeSecretKey;
+    }
 
     @Override
     public String createSubscription(StripeDTO stripeDTO) {
         // TODO ES DE EJEMPLO, CAMBIAR Y COMO FUNCIONA
         try {
-            Stripe.apiKey = System.getenv("STRIPE_SECRET_KEY");
-
+            //   Stripe.apiKey = System.getenv("STRIPE_SECRET_KEY");
+            Stripe.apiKey = stripeSecretKey;
             ProductCreateParams productCreateParams = ProductCreateParams.builder()
                     .setName(stripeDTO.getName())
                     .setDescription(stripeDTO.getDescription())
@@ -94,8 +102,8 @@ public class StripeService implements StripeUseCase {
     @Override
     public Session createCheckoutSession(StripeDTO stripeDTO) {
         try {
-            Stripe.apiKey = System.getenv("STRIPE_SECRET_KEY");
-
+            //      Stripe.apiKey = System.getenv("STRIPE_SECRET_KEY");
+            Stripe.apiKey = stripeSecretKey;
 
             SessionCreateParams params = SessionCreateParams.builder()
                     .setMode(SessionCreateParams.Mode.SUBSCRIPTION)
@@ -121,8 +129,8 @@ public class StripeService implements StripeUseCase {
     }
 
     public List<StripePaymentHistoryDTO> getPaymentHistory() {
-        Stripe.apiKey = System.getenv("STRIPE_SECRET_KEY");
-
+        //     Stripe.apiKey = System.getenv("STRIPE_SECRET_KEY");
+        Stripe.apiKey = stripeSecretKey;
         Map<String, Object> params = new HashMap<>();
         params.put("limit", 10);
 

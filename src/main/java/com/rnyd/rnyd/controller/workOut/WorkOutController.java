@@ -35,6 +35,7 @@ public class WorkOutController {
         this.workOutService = dietServiceService;
     }
 
+
     @PostMapping(value = "/create", consumes = {"multipart/form-data"})
     public ResponseEntity<String> createWorkOut(
             @RequestPart("workoutDTO") WorkOutPDFDTO workoutDTO,

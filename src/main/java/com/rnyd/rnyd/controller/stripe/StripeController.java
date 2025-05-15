@@ -77,5 +77,4 @@ public class StripeController {
         List<StripePaymentHistoryDTO> payments = stripeService.getPaymentHistory();
         return new ResponseEntity<>(payments, HttpStatus.OK);
     }
-
 }
