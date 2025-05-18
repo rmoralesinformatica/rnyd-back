@@ -40,3 +40,5 @@ git add .gitignore
 git commit -m "Add application.properties to .gitignore"
 
 src/main/resources/application.properties
+application.properties*
+.env
