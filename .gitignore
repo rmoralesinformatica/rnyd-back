@@ -29,8 +29,7 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
-# ignorar archivo
-.env
+
 
 ### VS Code ###
 .vscode/
@@ -40,5 +39,5 @@ git add .gitignore
 git commit -m "Add application.properties to .gitignore"
 
 src/main/resources/application.properties
-application.properties*
-.env
+
+
