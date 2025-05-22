@@ -37,7 +37,7 @@ La API está organizada por módulos, cada uno encargado de una parte específic
 - `DELETE /user/{email}`: Elimina a un usuario por su correo.
 - `GET /user/check-admin/{email}`: Comprueba si el usuario tiene rol de administrador.
 
-### 📝 Registro de usuarios
+### Registro de usuarios
 
 - `POST /signup/register`: Registra tanto usuarios como administradores, según el rol enviado.
 
