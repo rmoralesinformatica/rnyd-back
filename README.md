@@ -1,6 +1,7 @@
 
 ## Importante
-El archivo `application.properties` **no está incluido** en el repositorio porque contiene claves privadas de Stripe. Si necesitas probar el proyecto, solicítamelo directamente.
+- El archivo application.properties no está subido al repositorio porque lleva claves privadas de Stripe. Si alguien necesita probar el proyecto, se solicita directamente al autor.
+- También hay que tener creada la base de datos con el mismo nombre que viene configurado en ese archivo. La aplicación corre por el puerto 8080, así que si ese puerto está pillado por otra cosa, hay que liberarlo desde la consola antes de arrancar
 
 # RNYD - Backend API
 Este proyecto es el backend de una aplicación llamada **RNYD** (Registro Nutricional y Deportivo). Está orientado a la gestión de usuarios, progresos físicos, planes de dieta, entrenamientos personalizados y sistema de suscripciones mediante pagos. La API está construida con **Spring Boot** siguiendo una arquitectura RESTful.
