@@ -1,10 +1,10 @@
+# RNYD - Backend API
+- Este es el backend de la aplicación RNYD, desarrollado con Spring Boot. Se encarga de gestionar toda la lógica de negocio y exponer la API REST que consume el frontend hecho en Angular.Está organizado por controladores según el tipo de recurso: usuarios, entrenamientos, dietas, suscripciones y perfiles. También lleva la parte de seguridad, roles y autenticación con JWT.
+- La base de datos se conecta mediante JPA y está preparada para funcionar con MySQL. La aplicación se lanza por defecto en el puerto 8080.
 
 ## Importante
 - El archivo application.properties no está subido al repositorio porque lleva claves privadas de Stripe. Si alguien necesita probar el proyecto, se solicita directamente al autor.
 - También hay que tener creada la base de datos con el mismo nombre que viene configurado en ese archivo. La aplicación corre por el puerto 8080, así que si ese puerto está pillado por otra cosa, hay que liberarlo desde la consola antes de arrancar
-
-# RNYD - Backend API
-Este proyecto es el backend de una aplicación llamada **RNYD** (Registro Nutricional y Deportivo). Está orientado a la gestión de usuarios, progresos físicos, planes de dieta, entrenamientos personalizados y sistema de suscripciones mediante pagos. La API está construida con **Spring Boot** siguiendo una arquitectura RESTful.
 
 ## Requisitos
 Para poder ejecutar este proyecto se necesita:
