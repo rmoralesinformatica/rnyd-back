@@ -31,9 +31,16 @@ public class UserProgressController {
             @RequestParam("imageFile") MultipartFile imageFile,
             @RequestParam("weight") Double weight,
             @RequestParam("height") Double height,
+            @RequestParam("neck") Double neck,
+            @RequestParam("shoulders") Double shoulders,
+            @RequestParam("chest") Double chest,
+            @RequestParam("waist") Double waist,
+            @RequestParam("hips") Double hips,
+            @RequestParam("thigh") Double thigh,
+            @RequestParam("calf") Double calf,
             @RequestParam("progressDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate progressDate
     ) {
-        String response = userProgressService.saveProgress(email, imageFile, weight, height, progressDate);
+        String response = userProgressService.saveProgress(email, imageFile, weight, height, neck,shoulders,chest,waist,hips,thigh,calf,progressDate);
 
         if (response != null)
             return ResponseEntity.ok(response);

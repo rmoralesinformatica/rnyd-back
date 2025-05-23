@@ -37,7 +37,7 @@ public class UserProgressService {
         this.userProgressMapper = userProgressMapper;
     }
 
-    public String saveProgress(String email, MultipartFile imageFile, Double weight, Double height, LocalDate progressDate) {
+    public String saveProgress(String email, MultipartFile imageFile, Double weight, Double height, Double neck, Double shoulders, Double chest, Double waist, Double hips, Double thigh, Double calf, LocalDate progressDate) {
         Optional<UserEntity> userOpt = userRepository.findByEmail(email);
 
         if (userOpt.isEmpty()) {
@@ -67,6 +67,13 @@ public class UserProgressService {
             progress.setImageUrl(imageUrl); // este campo debes crearlo
             progress.setWeight(weight);
             progress.setHeight(height);
+            progress.setShoulders(shoulders);
+            progress.setHips(hips);
+            progress.setCalf(calf);
+            progress.setChest(chest);
+            progress.setNeck(neck);
+            progress.setThigh(thigh);
+            progress.setWaist(waist);
             progress.setProgressDate(progressDate);
             progress.setUser(userOpt.get());
 
@@ -91,15 +98,26 @@ public class UserProgressService {
 
         List<UserProgressDTO> dtoList = new ArrayList<>();
         for (UserProgressEntity progress : progressEntities) {
+
             UserProgressDTO dto = new UserProgressDTO();
-            dto.setImagePath(progress.getImageUrl()); // Aquí pones el URL
+            dto.setImagePath(progress.getImageUrl());
             dto.setWeight(progress.getWeight());
             dto.setHeight(progress.getHeight());
             dto.setProgressDate(progress.getProgressDate());
+            dto.setHips(progress.getHips());
+            dto.setCalf(progress.getCalf());
+            dto.setThigh(progress.getThigh());
+            dto.setShoulders(progress.getShoulders());
+            dto.setChest(progress.getChest());
+            dto.setWaist(progress.getWaist());
+            dto.setNeck(progress.getNeck());
+
             dtoList.add(dto);
         }
 
         return dtoList;
     }
+
+
 
 }
